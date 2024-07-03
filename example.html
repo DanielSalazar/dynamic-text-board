@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Text Board</title>
+    <style>
+        #text-board {
+            font-size: 24px;
+            padding: 20px;
+            border: 2px solid #000;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="text-board">Loading...</div>
+    <script>
+        async function fetchText() {
+            try {
+                const response = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=JK3-uA7DSZ6x4bFxVVtgdPuxp-sLBmJIu0nM7W8fjD5Ek1ewzylicjReJLWsjTWa-nqOtLYogxLOMmE_lvjCJM8MPJ-Fd42cm5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnATnEuFYbsvKIU15mWNWPZOFvijy-rQjqP0BXdCKtW6EYDbh3ddNRzF5dp6zq8Ya4HYO72XltQsOEcAZBoggLIz5MYDOdY0Lntz9Jw9Md8uu&lib=Mn5hW1dcClB0brxpNI4uXZzAceXsIAsDy');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const text = await response.text();
+                document.getElementById('text-board').textContent = text;
+            } catch (error) {
+                document.getElementById('text-board').textContent = 'Error fetching text';
+                console.error('There was a problem with the fetch operation:', error);
+            }
+        }
+        fetchText();
+        setInterval(fetchText, 60000); // Update every minute
+    </script>
+</body>
+</html>
